@@ -4,15 +4,15 @@
 const int screenWidth = 500;
 const int screenHeight = 500;
 
+const float speed = 100.0f;
+
 int directionX = 1;
 int directionY = 1;
 
-const float speed = 100.0f;
-
 struct customRect
 {
-    float x = 0.0f;
-    float y = 0.0f;
+    float x = 10.0f;
+    float y = 45.0f;
 };
 
 
@@ -27,21 +27,24 @@ void raylib_start(void){
         //Start Drawing
         BeginDrawing();
 
-        if (rect.x == 750)
+        rect.x += directionX * speed * dt;
+        rect.y += directionY * speed * dt;
+        if (rect.x + 50 >= screenWidth || rect.x <= 0)
         {
-            directionX -= 1;
+            directionX *= -1; 
         }
-        if (rect.y == 450)
+        if (rect.y + 50 > screenHeight || rect.y <= 0) 
         {
-            directionY -= 1;
+            directionY *= -1; 
         }
-
-        // if (rect.y += speed * directionY - 1)
-        // if (rect.x -= speed * directionX - 1)
-        // if (rect.y -= speed * directionY -1)
-
         //Clear background at each start.
         ClearBackground(RAYWHITE);
+        
+        //Close window
+        if(IsKeyDown(KEY_ESCAPE))
+        {
+            break;
+        }
 
         DrawRectangle(rect.x,rect.y,50,50,RED);
         EndDrawing();
